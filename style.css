@@ -1,0 +1,51 @@
+h2 {
+    text-align: center;
+    font-style: italic;
+}
+
+html body {
+    background-color: #e0e0e0;
+}
+
+.question-section {
+    margin: 1%;
+    padding: 1%;
+    border: 1px solid #000000;
+    border-radius: 1em;
+    background-color: whitesmoke;
+}
+
+.quiz-section {
+    margin: 5%;
+}
+
+.show-score {
+    transition: all linear 1s;
+    height: 35em;
+}
+
+.show-score.ng-hide {
+    opacity: 0;
+    height: 0;
+}
+
+.btn-group {
+    margin: 2%;
+}
+
+.score-section {
+    display: flex;
+    justify-content: center;
+    transition: all linear 1s;
+    height: 5em;
+}
+
+.score-section.ng-hide {
+    opacity: 0;
+    height: 0;
+}
+
+.try-again {
+    display: flex;
+    justify-content: center;
+}
