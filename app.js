@@ -14,7 +14,10 @@ quiz.controller("QuizController", function BoardController($scope) {
     $scope.questions = [
         {
             question: "Sum of 1 + 1?",
-            options: [{opt: "3", sel: false}, {opt: "2", sel: false}, {opt: "43", sel: false}, {opt: "223", sel: false}],
+            options: [{opt: "3", sel: false}, {opt: "2", sel: false}, {opt: "43", sel: false}, {
+                opt: "223",
+                sel: false
+            }],
             answer: 1,
             selected: -1,
             correct: false
@@ -40,15 +43,21 @@ quiz.controller("QuizController", function BoardController($scope) {
             correct: false
         },
         {
-            question: "Product of 12 + 11?",
-            options: [{opt: "132", sel: false}, {opt: "24", sel: false}, {opt: "112", sel: false}, {opt: "201", sel: false}],
+            question: "Product of 12 * 11?",
+            options: [{opt: "132", sel: false}, {opt: "24", sel: false}, {opt: "112", sel: false}, {
+                opt: "201",
+                sel: false
+            }],
             answer: 0,
             selected: -1,
             correct: false
         },
         {
             question: "Who is Israel's Prime Minister?",
-            options: [{opt: "Zehava Galon", sel: false}, {opt: "Gary Yurovsky", sel: false}, {opt: "Benhamin Netanyahu", sel: false}, {
+            options: [{opt: "Zehava Galon", sel: false}, {opt: "Gary Yurovsky", sel: false}, {
+                opt: "Benhamin Netanyahu",
+                sel: false
+            }, {
                 opt: "Yuval Ha-Mevulbal",
                 sel: false
             }],
@@ -71,6 +80,8 @@ quiz.controller("QuizController", function BoardController($scope) {
     $scope.showScoreToggle = true;
     $scope.showScoreResult = true;
     $scope.navStatus = false;
+    $scope.showUnansweredMessage = true;
+
     $scope.restart = function () {
         location.reload();
     };
@@ -93,6 +104,17 @@ quiz.controller("QuizController", function BoardController($scope) {
         $scope.score = parseInt(scr * (100 / $scope.questions.length));
         $scope.showScoreResult = false;
         $scope.navStatus = true;
+        $scope.showUnansweredMessage = true;
+    };
+
+    var allQuestionsAnswered = function () {
+        var answeredCounter = 0;
+        for (var i = 0; i < $scope.questions.length; i++) {
+            if ($scope.questions[i].selected != -1) {
+                answeredCounter++;
+            }
+        }
+        return answeredCounter === $scope.questions.length;
     };
 
     $scope.selectOption = function (option, qIndex) {
@@ -107,19 +129,24 @@ quiz.controller("QuizController", function BoardController($scope) {
                 }
             }
         }
+        $scope.showScoreToggle = !allQuestionsAnswered();
+        if (allQuestionsAnswered()) {
+            $scope.showUnansweredMessage = true;
+        }
+    };
+
+    var toggleMessageAndSubmit = function (btn) {
+        var cond = ($scope.currentQuestion === $scope.questions.length - 1);
+        $scope.showUnansweredMessage = !(cond && btn === 'next' && !allQuestionsAnswered());
     };
 
     $scope.nextQuestion = function () {
         $scope.currentQuestion = Math.min(++$scope.currentQuestion, $scope.questions.length - 1);
-        if ($scope.currentQuestion === $scope.questions.length - 1) {
-            $scope.showScoreToggle = false;
-        }
-        else {
-            $scope.showScoreToggle = true;
-        }
+        toggleMessageAndSubmit('next');
     };
 
     $scope.prevQuestion = function () {
         $scope.currentQuestion = Math.max(--$scope.currentQuestion, 0);
+        toggleMessageAndSubmit('prev');
     };
 });

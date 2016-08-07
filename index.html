@@ -36,13 +36,14 @@
             </div>
             <div class="btn btn-default" id="next-btn" ng-disabled="nextBtnStatus()" ng-click="nextQuestion()">Next</div>
         </fieldset>
-        <div class="btn btn-primary" ng-hide="showScoreToggle" ng-click="showScore()">Show Result</div>
+        <div class="btn btn-primary" ng-hide="showScoreToggle" ng-click="showScore()">Show Score</div>
         <div ng-hide="showScoreResult">
             <div class="score-section"><h1>Your Score: {{score}}%</h1></div>
             <div class="try-again">
                 <div class="btn btn-primary" ng-click="restart()">Try Again</div>
             </div>
         </div>
+        <div ng-hide="showUnansweredMessage"><b>To view your score, please answer all Questions.</b></div>
     </div>
 </div>
 
